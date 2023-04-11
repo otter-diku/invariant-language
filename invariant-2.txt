@@ -1,2 +1,4 @@
-EVENTS (PAYMENT_SUCCESSFUL ps)
-WHERE
+EVENTS (POLICY_UPDATE pu, POLICY_CREATE pc, POLICY_DELETE pd)
+WHERE pu.policy_id = pc.policy_id AND pc.policy_id = pd.policy_id
+ORDERING < pu, pd, pc > OR < pc, pu, pd >
+WINDOW 5 min

@@ -24,6 +24,10 @@ We have to think about whether we expect the user to specify invariants that
 describe the valid behaviour then we would have to negate that invariant and match all
 deviating events, or if the user specifies the incorrect behaviour directly.
 
+For now we will only have simple where clauses that use equality, AND, OR
+and value comparison.
+
+
 ### Time window invariants
 ```
 EVENTS (ORDER_SUBMITTED os, PAYMENT_SUCCESSFUL ps, PAYMENT_FAILED pf)
@@ -39,7 +43,6 @@ ORDERING < os, ps >
 WINDOW 5 minutes
 ```
 
-
 ### interleavings
 ```
 EVENTS (POLICY_UPDATE pu, POLICY_CREATE pc, POLICY_DELETE pd)
@@ -47,5 +50,3 @@ WHERE pu.policy_id = pc.policy_id AND pc.policy_id = pd.policy_id
 ORDERING < pu, pd, pc > OR < pc, pu, pd >
 WINDOW 5 minutes
 ```
-
-

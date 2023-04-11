@@ -1,4 +1,4 @@
 EVENTS (ORDER_SUBMITTED os, PAYMENT_SUCCESSFUL ps, PAYMENT_FAILED pf)
-WHERE
+WHERE os.orderid = ps.orderid OR os.orderid = pf.orderid
 ORDERING < os, ps> OR <ps, pf>
 WITHIN 5 sec

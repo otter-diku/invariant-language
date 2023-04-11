@@ -16,7 +16,6 @@ WITHIN 5 seconds
 ==> simple flink cep query order_submitted followed by payment_successful or payment_failed within 5 seconds
 
 
-
 -- ordering invariants (value based)
 EVENTS (ORDER_SUBMITTED os, PAYMENT_SUCCESSFUL ps)
 WHERE os.order_id = ps.order_ID

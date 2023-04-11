@@ -2,31 +2,38 @@ grammar invariants;
 
 invariant
       : 'EVENTS' '(' events ')' '\n'?
-        'WHERE' '\n'?
+        'WHERE' where_clause '\n'?
         ('ORDERING' orderings)? '\n'?
         'WITHIN' INT TIME
       | 'EVENTS' '(' events ')' '\n'?
-        'WHERE' '\n'?
+        'WHERE' where_clause '\n'?
         ('ORDERING' orderings)? '\n'?
         'WINDOW' INT TIME
         ;
-
 
 events: event (',' event)*;
 event: eventSchema eventId;
 eventSchema: IDENTIFIER;
 eventId: TEXT;
 
-orderings: ordering ('OR' ordering)*;
+where_clause: equality (OP equality)*;
+equality: qualifiedName '=' qualifiedName;
+
+
+orderings: ordering (OP ordering)*;
 ordering: '<' TEXT (',' TEXT)* '>';
 
 qualifiedName
-    : TEXT ('.' TEXT)*
+    : TEXT ('.' identifier)*
     ;
 
+OP: 'AND' | 'OR';
 INT: [0-9]+;
 IDENTIFIER
     : (LETTER | DIGIT | '_')+
+    ;
+identifier
+    : (TEXT | '_')+
     ;
 TIME
     : 'sec'
