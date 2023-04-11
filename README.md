@@ -3,6 +3,8 @@
 Exploration in using [antlr4](https://github.com/antlr/antlr4) for
 defining the invariant definition language.
 
+Very useful tool: http://lab.antlr.org/
+
 The goal would be that one can express simple invariants about
 timing, ordering in a SQL like language and our tool would
 automatically generate from a small textfile the whole
@@ -18,6 +20,9 @@ To test the grammer do the following:
 3. test the parser
 > java org.antlr.v4.runtime.misc.TestRig invariants invariant -gui invariant-1.txt
 
+We have to think about whether we expect the user to specify invariants that
+describe the valid behaviour then we would have to negate that invariant and match all
+deviating events, or if the user specifies the incorrect behaviour directly.
 
 ### Time window invariants
 ```

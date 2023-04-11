@@ -1,38 +1,42 @@
 grammar invariants;
 
 invariant
-      : EVENTS '(' events ')' '\n'?
-        WHERE '\n'?
-        ORDERING? '\n'?
-        WITHIN
-      | EVENTS '(' events ')' '\n'?
-        WHERE '\n'?
-        ORDERING? '\n'?
-        WINDOW
+      : 'EVENTS' '(' events ')' '\n'?
+        'WHERE' '\n'?
+        ('ORDERING' orderings)? '\n'?
+        'WITHIN' INT TIME
+      | 'EVENTS' '(' events ')' '\n'?
+        'WHERE' '\n'?
+        ('ORDERING' orderings)? '\n'?
+        'WINDOW' INT TIME
         ;
 
-WS: [ \t]+ -> skip ; // toss out whitespace    
 
 events: event (',' event)*;
 event: eventSchema eventId;
 eventSchema: IDENTIFIER;
 eventId: TEXT;
 
-EVENTS: 'EVENTS';
-WHERE: 'WHERE';
-WITHIN: 'WITHIN';
-ORDERING: 'ORDERING';
-WINDOW: 'WINDOW';
+orderings: ordering ('OR' ordering)*;
+ordering: '<' TEXT (',' TEXT)* '>';
 
-TEXT : [a-z]+;
+qualifiedName
+    : TEXT ('.' TEXT)*
+    ;
+
+INT: [0-9]+;
 IDENTIFIER
     : (LETTER | DIGIT | '_')+
     ;
-
-fragment DIGIT
-    : [0-9]
+TIME
+    : 'sec'
+    | 'min'
+    | 'hour'
     ;
+DIGIT: [0-9];
+LETTER: [A-Z];
+TEXT: [a-z]+;
 
-fragment LETTER
-    : [A-Z]
-    ;
+
+
+WS: [ \t\n\r\f]+ -> skip ;
